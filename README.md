@@ -1,12 +1,14 @@
 Introduction:
 -------------
-This package provides class to control the GPIO on Olinuxino A20.
+This package provides functions to control the GPIO on Olinuxino A20.
 With some arduino compatible function.
 This pacakage is based on work done by Stefan Mavrodiev <support@olimex.com>
 for the pyA20 python library https://pypi.python.org/pypi/pyA20
 
-main change between the two library is the way to give gpi pin to use.
-all oa20_xxxx use connector , pin value of the olimex a20 board.
+Main change between the two library is the way to give gpio pin to use.
+
+All "oa20_xxxx"  function use connector , pin value of the olimex a20 board.
+
 ie: oa20_gpio_set_cfgpin(3,7,OUTPUT)  will put pin 7 of the connector GPIO3 in output mode.
 
 Some arduino like function is also added to facilitate usage of arduino library on the olimex a20 board
@@ -29,11 +31,11 @@ How to build
 First of all you need cmake installed on your system.
 go into main directory and do 
 
-mkdir build
-cd build
-cmake ../
-make 
-make install
+* mkdir build
+* cd build
+* cmake ../
+* make 
+* make install
 
 The gpio-test bin provided as sample will let the green led of the board blink
 

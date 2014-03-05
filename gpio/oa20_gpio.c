@@ -264,3 +264,20 @@ void _delay_ms(unsigned long delay){
   usleep(delay*1000);
 }
 
+void delayMicroseconds(unsigned int d)
+{
+        usleep(d);
+}
+
+unsigned long millis(void)
+{
+  struct timeval current;
+  uint64_t elapsed ;
+
+  gettimeofday (&current, NULL) ;
+  elapsed  = (uint64_t)current.tv_sec * (uint64_t)1000 + (uint64_t)(current.tv_usec / 1000) ;
+
+  return elapsed ;
+}
+
+

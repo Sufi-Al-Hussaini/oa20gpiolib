@@ -20,6 +20,13 @@
 #define SETUP_MALLOC_FAIL   2
 #define SETUP_MMAP_FAIL     3
 
+#define GPIO1 1
+#define GPIO2 2
+#define GPIO3 3
+#define LCD 4
+#define UEXT1 5
+#define UEXT2 6
+
 #define HIGH    1
 #define LOW     0
 
@@ -275,6 +282,9 @@ void pinMode(unsigned int pin, unsigned char  mode);
 void digitalWrite(unsigned int pin, unsigned char value);
 int digitalRead(unsigned int pin);
 void _delay_ms(unsigned long delay);
+void delayMicroseconds(unsigned int d);
+unsigned long millis(void);
+
 
 #ifdef __cplusplus
 }

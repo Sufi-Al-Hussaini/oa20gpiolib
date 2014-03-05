@@ -33,7 +33,7 @@
 #define INPUT   0
 #define OUTPUT  1
 #define PER     2
-
+#include <stdint.h>
 
 struct sunxi_gpio {
     unsigned int cfg[4];
@@ -283,7 +283,7 @@ void digitalWrite(unsigned int pin, unsigned char value);
 int digitalRead(unsigned int pin);
 void _delay_ms(unsigned long delay);
 void delayMicroseconds(unsigned int d);
-unsigned long millis(void);
+uint64_t millis(void);
 
 
 #ifdef __cplusplus

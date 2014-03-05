@@ -23,6 +23,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <math.h>
 #include <time.h>
 #include <signal.h>
@@ -269,7 +270,7 @@ void delayMicroseconds(unsigned int d)
         usleep(d);
 }
 
-unsigned long millis(void)
+uint64_t millis(void)
 {
   struct timeval current;
   uint64_t elapsed ;

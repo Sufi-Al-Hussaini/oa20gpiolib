@@ -211,6 +211,27 @@ int sunxi_gpio_input(unsigned int pin) {
 
     return (dat & 0x1);
 }
+
+int sunxi_gpio_set_pull(unsigned int pin, unsigned int val)
+{
+    unsigned int pull;
+    unsigned int bank = GPIO_BANK(pin);
+    unsigned int index = GPIO_PULL_INDEX(pin);
+    unsigned int offset = GPIO_PULL_OFFSET(pin);
+    
+    if(SUNXI_PIO_BASE == 0)
+    {
+        return -1;
+    }
+
+    struct sunxi_gpio *pio = &((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
+    pull = *(&pio->pull[0] + index);
+    pull &= ~(0xf << offset);
+    pull |= val << offset;
+    *(&pio->pull[0] + index) = pull;
+    return 0;
+}
+
 void sunxi_gpio_cleanup(void)
 {
     unsigned int PageSize;
@@ -253,6 +274,10 @@ unsigned int oa20_gpio_map(unsigned char con,unsigned int pin){
 void pinMode(unsigned int pin, unsigned char  mode){
    sunxi_gpio_set_cfgpin(pin, mode);
 } 
+
+void pullUpDnControl (int pin, int pud) {
+    sunxi_gpio_set_pull(pin, pud);
+}
 
 void digitalWrite(unsigned int pin, unsigned char value){
    sunxi_gpio_output(pin,value);

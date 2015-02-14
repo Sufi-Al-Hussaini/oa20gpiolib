@@ -1,40 +1,32 @@
+/*
+* Compile using: gcc gpio-test.c -o gpio-test -loa20_gpio -lrt
+*
+*/
 #include <stdio.h>
-#include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <oa20_gpio.h>
 
 
-#include "../gpio/oa20_gpio.h" 
-
-
-void sig_handler(int signo)
-{
-  if (signo == SIGINT){
-       printf("handle SIGINT\n");
-       sunxi_gpio_cleanup();
-       exit(1);
-     }
-
+int main(int argc , char *argv[]){
     
-}
-
-inline void msleep(long int t)
-{
-   usleep(t*1000);
-}
-
-void main(void)
-{
- int i=0;
- long int t=0;
- if (SETUP_OK==sunxi_gpio_init()){
-    if (signal(SIGINT, sig_handler) == SIG_ERR) 
-       exit(1);
-    oa20_gpio_set_cfgpin(3,7,OUTPUT);
-    while (1){
-          i=(i+1)%2;
-          oa20_gpio_output(3,7,i);
-          msleep(1000);
-          printf("set =%d\n",i);
-  }
- }
+    if (SETUP_OK==sunxi_gpio_init()){
+        printf("GPIO initialized!\n");
+    }
+    
+    pinMode(PIN_PD5, INPUT);
+    pullUpDnControl(PIN_PD5, 1);
+    pinMode(PIN_PD4, INPUT);
+    pullUpDnControl(PIN_PD4, 1);
+    pinMode(PIN_PD3, INPUT);
+    pullUpDnControl(PIN_PD3, 1);
+    
+    printf("Waiting for input...\n");
+    
+    while(1){
+        usleep(20000);
+        printf("Values of pins PIN_PD3 = %d, PIN_PD4 = %d, PIN_PD5 = %d\n", digitalRead(PIN_PD5), digitalRead(PIN_PD4), digitalRead(PIN_PD3));
+    }
+    
+    return 0;
 }

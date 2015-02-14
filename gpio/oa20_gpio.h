@@ -62,6 +62,8 @@ struct sunxi_gpio_reg {
 #define GPIO_CFG_INDEX(pin)	(((pin) & 0x1F) >> 3)
 #define GPIO_CFG_OFFSET(pin)	((((pin) & 0x1F) & 0x7) << 2)
 
+#define GPIO_PULL_INDEX(pin)    (((pin) & 0x1F) >> 4)
+#define GPIO_PULL_OFFSET(pin)   ((((pin) & 0x1F) & 0xf) << 1)
 /* GPIO bank sizes */
 #define SUNXI_GPIO_A_NR		(32)
 #define SUNXI_GPIO_B_NR		(32)
@@ -153,30 +155,30 @@ enum sunxi_gpio_number {
 
 
 //GPIO 1
-#define PIN_P5V	-1
-#define PIN_P33V    -1
-#define PIN_GND     -1
-#define PIN_VOLP_BUT -1
-#define PIN_VOLM_BUT -1
-#define PIN_MENU_BUT -1
-#define PIN_SEARCH_BUT -1
-#define PIN_HOME_BUT -1
-#define PIN_ESC_BUT -1
-#define PIN_ENTER_BUT -1
-#define PIN_PG0		SUNXI_GPG(0)
-#define PIN_PG1		SUNXI_GPG(1)
-#define PIN_PG2		SUNXI_GPG(2)
-#define PIN_PG3		SUNXI_GPG(3)
-#define PIN_PG4		SUNXI_GPG(4)
-#define PIN_PG5		SUNXI_GPG(5)
-#define PIN_PG6		SUNXI_GPG(6)
-#define PIN_PG7		SUNXI_GPG(7)
-#define PIN_PG8		SUNXI_GPG(8)
-#define PIN_PG9		SUNXI_GPG(9)
-#define PIN_PG10	SUNXI_GPG(10)
-#define PIN_PG11	SUNXI_GPG(11)
-//#define PIN_PD26	SUNXI_GPD(26)
-//#define PIN_PD27	SUNXI_GPD(27)
+#define PIN_P5V	        -1
+#define PIN_P33V        -1
+#define PIN_GND         -1
+#define PIN_VOLP_BUT    -1
+#define PIN_VOLM_BUT    -1
+#define PIN_MENU_BUT    -1
+#define PIN_SEARCH_BUT  -1
+#define PIN_HOME_BUT    -1
+#define PIN_ESC_BUT     -1
+#define PIN_ENTER_BUT   -1
+#define PIN_PG0		   SUNXI_GPG(0)
+#define PIN_PG1		   SUNXI_GPG(1)
+#define PIN_PG2		   SUNXI_GPG(2)
+#define PIN_PG3		   SUNXI_GPG(3)
+#define PIN_PG4		   SUNXI_GPG(4)
+#define PIN_PG5		   SUNXI_GPG(5)
+#define PIN_PG6		   SUNXI_GPG(6)
+#define PIN_PG7		   SUNXI_GPG(7)
+#define PIN_PG8		   SUNXI_GPG(8)
+#define PIN_PG9		   SUNXI_GPG(9)
+#define PIN_PG10	   SUNXI_GPG(10)
+#define PIN_PG11	   SUNXI_GPG(11)
+//#define PIN_PD26	     SUNXI_GPD(26)
+//#define PIN_PD27	     SUNXI_GPD(27)
 
 //GPIO 2
 //#define PIN_PB0		SUNXI_GPB(0)
@@ -249,6 +251,41 @@ enum sunxi_gpio_number {
 #define PIN_PH23	SUNXI_GPH(23)
 #define PIN_PH27	SUNXI_GPH(27)
 
+//GPIO 4            //i.e. LCD CONNECTOR
+#define PIN_PD16    SUNXI_GPD(16)
+#define PIN_PD17    SUNXI_GPD(17)
+#define PIN_PD18    SUNXI_GPD(18)
+#define PIN_PD19    SUNXI_GPD(19)
+#define PIN_PD20    SUNXI_GPD(20)
+#define PIN_PD21    SUNXI_GPD(21)
+#define PIN_PD22    SUNXI_GPD(22)
+#define PIN_PD23    SUNXI_GPD(23)
+#define PIN_PD8     SUNXI_GPD(8)
+#define PIN_PD9     SUNXI_GPD(9)
+#define PIN_PD10    SUNXI_GPD(10)
+#define PIN_PD11    SUNXI_GPD(11)
+#define PIN_PD12    SUNXI_GPD(12)
+#define PIN_PD13    SUNXI_GPD(13)
+#define PIN_PD14    SUNXI_GPD(14)
+#define PIN_PD15    SUNXI_GPD(15)
+#define PIN_PD0     SUNXI_GPD(0)
+#define PIN_PD1     SUNXI_GPD(1)
+#define PIN_PD2     SUNXI_GPD(2)
+#define PIN_PD3     SUNXI_GPD(3)
+#define PIN_PD4     SUNXI_GPD(4)
+#define PIN_PD5     SUNXI_GPD(5)
+#define PIN_PD6     SUNXI_GPD(6)
+#define PIN_PD7     SUNXI_GPD(7)
+#define PIN_PD26    SUNXI_GPD(26)
+#define PIN_PD27    SUNXI_GPD(27)
+#define PIN_PD24    SUNXI_GPD(24)
+#define PIN_PD25    SUNXI_GPD(25)
+#define PIN_PB3     SUNXI_GPB(3)
+#define PIN_PB4     SUNXI_GPB(4)
+#define PIN_PH8     SUNXI_GPH(8)
+#define PIN_PB2     SUNXI_GPB(2)
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -258,6 +295,8 @@ int sunxi_gpio_init(void);
 int sunxi_gpio_set_cfgpin(unsigned int pin, unsigned int val);
 int sunxi_gpio_get_cfgpin(unsigned int pin);
 int sunxi_gpio_output(unsigned int pin, unsigned int val);
+int sunxi_gpio_input(unsigned int pin);
+int sunxi_gpio_set_pull(unsigned int pin, unsigned int val);
 void sunxi_gpio_cleanup(void);
 extern unsigned int SUNXI_PIO_BASE;
 
@@ -279,6 +318,7 @@ unsigned int oa20_gpio_map(unsigned char con,unsigned int pin);
  */
 
 void pinMode(unsigned int pin, unsigned char  mode);
+void pullUpDnControl (int pin, int pud) ;
 void digitalWrite(unsigned int pin, unsigned char value);
 int digitalRead(unsigned int pin);
 void _delay_ms(unsigned long delay);
